@@ -1,0 +1,24 @@
+if (!isApplication.toBoolean()) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
+apply from: '../depends.gradle'
+apply plugin: 'kotlin-android'
+
+android {
+    sourceSets{
+        main {
+            if (!isApplication.toBoolean()) {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/module/AndroidManifest.xml'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':base')
+    implementation project(path: ':user-api')
+}
